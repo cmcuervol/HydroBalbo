@@ -127,3 +127,21 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+Datos/
+CleanData/*
+IDF/
+Hydrograms/
+Balance/
+Tests/
+Ajustes/
+CleanNiveles/
+Sedimentos/
+*csv
+.DS_Store
+*.png
+*.pptx
+*.xlsx
+*.xls
+*.zip
