@@ -48,9 +48,8 @@ def OuliersENSOjust(Serie, ENSO=ENSO, lim_inf=0):
     return S
 ################################   INPUT   #####################################
 
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanNiveles'))
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanSedimentos'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 
 
@@ -147,10 +146,10 @@ pbar.close()
 
 
 
-if Est_path.endswith('CleanNiveles'):
-    sufix = 'NR'
-elif Est_path.endswith('CleanSedimentos'):
-    sufix = 'Sed'
+if Est_path.endswith('PPT'):
+    sufix = 'PPT'
+elif Est_path.endswith('QDL'):
+    sufix = 'QDL'
 else:
     sufix = ''
 

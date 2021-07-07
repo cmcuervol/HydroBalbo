@@ -140,10 +140,8 @@ def MEIdata():
 
     return MEI
 
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanNiveles'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanSedimentos'))
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Datos/ENSO_P'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ENSO'))
 
 
@@ -210,7 +208,7 @@ for i in range(len(Estaciones)):
     if Est_path.endswith('CleanSedimentos'):
         Est  = Estaciones[i].split('_')[1].split('.csv')[0]+'_Sedimentos'
         lab  = 'Anomalia transporte'
-    elif Est_path.endswith('ENSO_P'):
+    elif Est_path.endswith('PPT'):
         Est  = Estaciones[i].split('.csv')[0]
         lab  = 'Anomalia precipitación'
     else:
@@ -226,16 +224,11 @@ for i in range(len(Estaciones)):
     if Est_path.endswith('CleanSedimentos'):
         serie = pd.read_csv(os.path.join(Est_path, Estaciones[i]), index_col=0)
         serie.index = pd.DatetimeIndex(serie.index)
-    elif Est_path.endswith('ENSO_P'):
-        serie = pd.read_csv(os.path.join(Est_path, Estaciones[i]), index_col=0)
-        serie.index = pd.DatetimeIndex(serie.index)
-        serie[serie==99999] = np.nan
-        serie = serie.dropna()
 
     else:
         serie = Read.EstacionCSV_pd(Estaciones[i], Est, path=Est_path)
-        if Estaciones[i].endswith('N.csv') == False:
-            serie.index = [dt.datetime.strptime(fecha.strftime("%Y-%m-%d") , "%Y-%d-%m") for fecha in serie.index]
+        # if Estaciones[i].endswith('N.csv') == False:
+        #     serie.index = [dt.datetime.strptime(fecha.strftime("%Y-%m-%d") , "%Y-%d-%m") for fecha in serie.index]
     try:
         Anoma = Anomalies(serie)
     except:
@@ -313,11 +306,11 @@ for i in range(len(Estaciones)):
     SOI_r = SOI_r.append(soi_r)
     SOI_s = SOI_s.append(soi_s)
 
-if Est_path.endswith('CleanNiveles'):
-    sufix = 'NR'
+if Est_path.endswith('QDL'):
+    sufix = 'QDL'
 elif Est_path.endswith('CleanSedimentos'):
     sufix = 'Sed'
-elif Est_path.endswith('ENSO_P'):
+elif Est_path.endswith('PPT'):
     sufix = 'PPT'
 else:
     sufix = ''

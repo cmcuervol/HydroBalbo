@@ -239,16 +239,12 @@ def MannKendall_modified(Serie, rezagos=None, significance=5E-2):
     return test
 
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanNiveles'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 
 Estaciones = Listador(Est_path,final='.csv')
 
-if Est_path.endswith('CleanData') == True:
-    Estaciones = ['25017010.csv']
-elif Est_path.endswith('CleanNiveles') == True:
-    Estaciones = ['25017010NR.csv']
 
 Pruebas = ['Rachas', 'PuntoCambio', 'Spearman', 'Anderson','MannKendall']
 Test = pd.DataFrame([], columns=Pruebas)
@@ -262,10 +258,10 @@ for i in range(len(Estaciones)):
 
     Name = Meta.iloc[0].values[0]
     Esta  = Estaciones[i].split('.csv')[0]
-    if Est_path.endswith('CleanNiveles'):
-        Meta.iloc[-2].values[0] = u'Nivel máximo diario'
-        Name += 'NR_'
-        Esta += 'NR'
+    if Est_path.endswith('QDL'):
+        Meta.iloc[-2].values[0] = u'Caudal'
+        Name += 'QDL_'
+        Esta += 'QDL'
 
     Dat = Read.EstacionCSV_pd(Estaciones[i], Name, path=Est_path)
     # if Estaciones[i].endswith('N.csv') == False:
@@ -274,7 +270,6 @@ for i in range(len(Estaciones)):
     except:
         pass
 
-    Dat = Dat['1994-01-01':]
     Dat = Dat.dropna()
     # dat =  Dat.values.ravel()
     # yearly  = Dat.groupby(lambda y: y.year).max().values.ravel()

@@ -34,9 +34,8 @@ Lq    = [NORMq, EXPq, GUMq, GPAq, GEVq, GLOq, LLOG3q, LP3q]
 
 ################################   INPUT   #####################################
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanNiveles'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanSedimentos'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 
 # Read.SplitAllIDEAM('NivelReal', Est_path=Est_path,Nivel=True)
@@ -101,12 +100,13 @@ for i in range(len(Estaciones)):
         Meta = pd.read_csv(os.path.join(Est_path, Estaciones[i].split('.')[0]+'.meta'),index_col=0)
         Name = Meta.iloc[0].values[0]
 
-        if Est_path.endswith('CleanNiveles'):
-            Est = Name + 'NR'
+        if Est_path.endswith('PPT'):
+            Est = Name + 'PPT'
+            label = u'Precipitación [mm]'
         else:
             Est  = Name+'Caudal' if Meta.iloc[-4].values[0]=='CAUDAL' else Name+'Nivel'
 
-        label = u'Caudal [m$^{3}$/s]' if Meta.iloc[-4].values[0]=='CAUDAL' else 'Nivel'
+            label = u'Caudal [m$^{3}$/s]' if Meta.iloc[-4].values[0]=='CAUDAL' else 'Nivel'
         serie = Read.EstacionCSV_pd(Estaciones[i], Est, path=Est_path)
         try:
             serie.index = [dt.datetime.strptime(fecha.strftime("%Y-%m-%d") , "%Y-%d-%m") for fecha in serie.index]

@@ -20,9 +20,9 @@ from Modules.Homogeneidad import FSimple, FMod, Bartlett, AnsariBradley, Levene
 from Modules.Homogeneidad import TSimple, TMod, UMann, KruskallWallis
 
 ################################   INPUT   #####################################
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanNiveles'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanSedimentos'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Tests/Homogeneidad'))
 
 Estaciones = Listador(Est_path,final='.csv')
@@ -43,10 +43,10 @@ for i in range(len(Estaciones)):
     if Est_path.endswith('CleanSedimentos') == False:
         Meta = pd.read_csv(os.path.join(Est_path, Estaciones[i].split('.')[0]+'.meta'),index_col=0)
         Name = Meta.iloc[0].values[0]
-        if Est_path.endswith('CleanNiveles'):
-            Est = Name + 'NR'
-            unidades = '[m]'
-            label = 'Nivel [m]'
+        if Est_path.endswith('PPT'):
+            Est = Name + '_PPT'
+            unidades = '[mm]'
+            label = 'PPT [mm]'
         else:
             Est  = Name+'Caudal' if Meta.iloc[-4].values[0]=='CAUDAL' else Name+'Nivel'
             unidades = '[m$^{3}$ s$^{-1}$]' if Meta.iloc[-4].values[0]=='CAUDAL' else '[cm]'
@@ -339,14 +339,15 @@ for i in range(len(Estaciones)):
         tend = pd.Series(np.array([hMK,hTR]),name=Est, index=pruebas_tend)
         Res_tend = Res_tend.append(tend)
 
-        if Est_path.endswith('CleanNiveles'):
-            sufix = 'NR'
-        elif Est_path.endswith('CleanSedimentos'):
-            sufix = 'Sed'
+        if Est_path.endswith('PPT'):
+            sufix = 'PPT'
+        elif Est_path.endswith('QDL'):
+            sufix = 'QDL'
         else:
             sufix = ''
     except:
         continue
+
 
 Res_Med .to_csv(os.path.join(Path_out,f'ResumenMedia_{sufix}.csv'))
 Res_std .to_csv(os.path.join(Path_out,f'ResumenVarianza_{sufix}.csv'))
