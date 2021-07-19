@@ -10,8 +10,16 @@ import datetime as dt
 from Modules.Utils import Listador
 from Modules import Read
 
+
 Est_P = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Datos/CrudosP'))
 Est_Q = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Datos/CrudosQ'))
+
+
+if os.path.exists(os.path.join(os.path.dirname(__file__), 'CleanData/PPT')) == False:
+    os.paht.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+
+if os.path.exists(os.path.join(os.path.dirname(__file__), 'CleanData/QDL')) == False:
+    os.paht.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 Out_P = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
 Out_Q = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))

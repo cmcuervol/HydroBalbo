@@ -140,6 +140,7 @@ CleanNiveles/
 Sedimentos/
 *csv
 .DS_Store
+*.DS_Store
 *.png
 *.pptx
 *.xlsx

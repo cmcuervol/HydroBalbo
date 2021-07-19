@@ -224,7 +224,7 @@ def AndersonTest(Serie, rezagos=None, significance=5E-2, ):
         else:
             t[k] = False
     if t.sum() == N:
-        test == True
+        test = True
     else:
         test = False
 
