@@ -8,7 +8,7 @@ import io
 import requests
 from dateutil.relativedelta import relativedelta
 from Modules.Utils import Listador, FindOutlier, FindOutlierMAD, Cycles
-
+from Modules.Graphs import GraphSerieOutliers, GraphSerieOutliersMAD
 
 def SSTregions():
     """
@@ -176,12 +176,12 @@ def OuliersENSOjust(Serie, ENSO, method='IQR', lim_inf=0,
         S = Serie.drop(Serie.index[injust])
         if write == True:
             outliers = Serie.iloc[injust]
-            outliers.to_csv(os.path.join(Path_out, f'Outliers_{name}_{method}.csv'))
+            outliers.to_csv(os.path.join(Path_Out, f'Outliers_{name}_{method}.csv'))
     if graph == True:
         outliers = Serie.iloc[injust]
         GraphSerieOutliersMAD(Serie, outliers,
                               name=f'Outliers_{name}_{method}',
                               label=label,title=title,pdf=pdf, png=png,
-                              PathFigs=Path_out)
+                              PathFigs=Path_Out)
 
     return S

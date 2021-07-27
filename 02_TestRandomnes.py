@@ -192,8 +192,8 @@ def MannKendall_modified(Serie, rezagos=None, significance=5E-2):
     return test
 
 
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 
 Estaciones = Listador(Est_path,final='.csv')
@@ -235,16 +235,19 @@ for i in range(len(Estaciones)):
                        png=True, pdf=False,
                        name=Estaciones[i].split('.csv')[0],
                        PathFigs=os.path.join(Path_out,Meta.iloc[-4].values[0]))
+
+    if os.path.exists(os.path.join(Path_out,Meta.iloc[-4].values[0])) == False:
+        os.makedirs(os.path.join(Path_out,Meta.iloc[-4].values[0]))
     Serie = OuliersENSOjust(Dat.sort_index(),method='IQR', ENSO=ENSO,
                             write=True, name=Esta+'_OutlierIQR',
                             graph=True, label=Meta.iloc[-2].values[0], title=Name,
                             pdf=False, png=True,
-                            Path_out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
+                            Path_Out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
     serie = OuliersENSOjust(Dat.sort_index(),method='MAD', ENSO=ENSO,
                             write=True, name=Esta+'_OutlierMAD',
                             graph=True, label=Meta.iloc[-2].values[0], title=Name,
                             pdf=False, png=True,
-                            Path_out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
+                            Path_Out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
 
     yearly  = Serie.groupby(lambda y: y.year).max().values.ravel()
     if len(yearly)>3:

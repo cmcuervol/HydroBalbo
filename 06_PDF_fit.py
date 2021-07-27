@@ -34,8 +34,8 @@ Lq    = [NORMq, EXPq, GUMq, GPAq, GEVq, GLOq, LLOG3q, LP3q]
 
 ################################   INPUT   #####################################
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 
 # Read.SplitAllIDEAM('NivelReal', Est_path=Est_path,Nivel=True)
@@ -84,8 +84,8 @@ for i in range(len(Estaciones)):
         serie = pd.read_csv(os.path.join(Est_path, Estaciones[i]), index_col=0)
         serie.index = pd.DatetimeIndex(serie.index)
 
-    serie = OuliersENSOjust(serie, ENSO, method='IQR', lim_inf=0,  write=True, name=Est, Path_out=Path_out)
-    SERIE = OuliersENSOjust(serie, ENSO, method='MAD', lim_inf=0,  write=True, name=Est, Path_out=Path_out)
+    serie = OuliersENSOjust(serie, ENSO, method='IQR', lim_inf=0,  write=True, name=Est, Path_Out=Path_out)
+    SERIE = OuliersENSOjust(serie, ENSO, method='MAD', lim_inf=0,  write=True, name=Est, Path_Out=Path_out)
 
     serie = serie.groupby(lambda y : y.year).max()
     serie = serie[~np.isnan(serie.values)].values.ravel()
