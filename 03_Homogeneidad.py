@@ -19,6 +19,12 @@ from Modules.Homogeneidad import FSimple, FMod, Bartlett, AnsariBradley, Levene
 # Pruebas cambio media
 from Modules.Homogeneidad import TSimple, TMod, UMann, KruskallWallis
 
+from Modules.ENSO import ONIdata, OuliersENSOjust
+
+ONI = ONIdata()
+ONI = ONI['Anomalie'].astype(float)
+ENSO = ONI[np.where((ONI.values<=-0.5)|(ONI.values>=0.5))[0]]
+
 ################################   INPUT   #####################################
 # Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
 Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
@@ -64,6 +70,9 @@ for i in range(len(Estaciones)):
         data = mensual
         unidades = '[kTon/dia]'
         label = 'Trans [kTon/dia]'
+
+    data = OuliersENSOjust(data.sort_index(),method='MAD', ENSO=ENSO,
+                           write=False,graph=False)
 
     try:
         data = data.dropna()

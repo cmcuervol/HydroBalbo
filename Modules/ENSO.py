@@ -7,6 +7,7 @@ import os
 import io
 import requests
 from dateutil.relativedelta import relativedelta
+from Modules.Utils import Listador, FindOutlier, FindOutlierMAD, Cycles
 
 
 def SSTregions():
@@ -139,7 +140,7 @@ def MEIdata():
 
 def OuliersENSOjust(Serie, ENSO, method='IQR', lim_inf=0,
                     write=True, name=None,
-                    graph=True, label='', title='', pdf=False, png=True):
+                    graph=True, label='', title='', pdf=False, png=True, Path_Out=''):
     """
     Remove  outliers with the function find outliers and justify the values in ENSO periods
     INPUTS
@@ -153,6 +154,7 @@ def OuliersENSOjust(Serie, ENSO, method='IQR', lim_inf=0,
     title : Figure title
     pdf   : Boolean to save figure in pdf format
     png   : Boolean to save figure in png format
+    Path_Out: Directoty to save figures
     OUTPUTS
     S : DataFrame without outliers outside ENSO periods
     """

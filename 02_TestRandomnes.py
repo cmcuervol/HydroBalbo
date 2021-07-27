@@ -236,13 +236,15 @@ for i in range(len(Estaciones)):
                        name=Estaciones[i].split('.csv')[0],
                        PathFigs=os.path.join(Path_out,Meta.iloc[-4].values[0]))
     Serie = OuliersENSOjust(Dat.sort_index(),method='IQR', ENSO=ENSO,
-                            write=True, name=Esta,
+                            write=True, name=Esta+'_OutlierIQR',
                             graph=True, label=Meta.iloc[-2].values[0], title=Name,
-                            pdf=False, png=True)
+                            pdf=False, png=True,
+                            Path_out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
     serie = OuliersENSOjust(Dat.sort_index(),method='MAD', ENSO=ENSO,
-                            write=True, name=Esta,
+                            write=True, name=Esta+'_OutlierMAD',
                             graph=True, label=Meta.iloc[-2].values[0], title=Name,
-                            pdf=False, png=True)
+                            pdf=False, png=True,
+                            Path_out=os.path.join(Path_out,Meta.iloc[-4].values[0]))
 
     yearly  = Serie.groupby(lambda y: y.year).max().values.ravel()
     if len(yearly)>3:
