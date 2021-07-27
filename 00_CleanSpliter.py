@@ -16,10 +16,10 @@ Est_Q = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Datos/CrudosQ')
 
 
 if os.path.exists(os.path.join(os.path.dirname(__file__), 'CleanData/PPT')) == False:
-    os.paht.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
 
 if os.path.exists(os.path.join(os.path.dirname(__file__), 'CleanData/QDL')) == False:
-    os.paht.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 Out_P = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
 Out_Q = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))

@@ -13,7 +13,7 @@ import pylab as plt
 
 from Modules import Read
 from Modules.Utils import Listador, FindOutlier, FindOutlierMAD
-from ENSO import ONIdata
+from Modules.ENSO import ONIdata, OuliersENSOjust
 ############################   L-moments functions   ###########################
 
 from Modules.Lmoments import Lmom, Lmom1
@@ -42,40 +42,6 @@ Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 ONI = ONIdata()
 ONI = ONI['Anomalie'].astype(float)
 ENSO = ONI[np.where((ONI.values<=-0.5)|(ONI.values>=0.5))[0]]
-
-def OuliersENSOjust(Serie, ENSO=ENSO, method='IQR', lim_inf=0, write=True, name=None, Path_out=os.getcwd()):
-    """
-    Remove  outliers with the function find outliers and justify the values in ENSO periods
-    INPUTS
-    Serie : Pandas DataFrame or pandas Series with index as datetime
-    ENSO  : Pandas DataFrame with the index of dates of ENSO periods
-    method: str to indicate the mehtod to find outliers, ['IQR','MAD']
-    lim_inf : limit at the bottom for the outliers
-    write : boolean to write the outliers
-    Name  : string of estation name to save the outliers
-    OUTPUTS
-    S : DataFrame without outliers outside ENSO periods
-    """
-    if method == 'IQR':
-        idx = FindOutlier(Serie, clean=False, index=True, lims=False, restrict_inf=lim_inf)
-    elif method == 'MAD':
-        idx = FindOutlierMAD(Serie.dropna().values,clean=False, index=True)
-    else:
-        print(f'{method} is not a valid method, please check the spelling')
-    injust = []
-    for ii in idx:
-        month = dt.datetime(Serie.index[ii].year,Serie.index[ii].month, 1)
-        if month not in ENSO.index:
-            injust.append(ii)
-
-    if  len(injust) == 0:
-        S = Serie
-    else:
-        S = Serie.drop(Serie.index[injust])
-        if write == True:
-            outliers = Serie.iloc[injust]
-            outliers.to_csv(os.path.join(Path_out, f'Outliers_{name}_{method}.csv'))
-    return S
 
 Estaciones = Listador(Est_path,final='.csv')
 

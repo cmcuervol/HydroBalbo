@@ -682,7 +682,7 @@ def GraphSerieOutliers(Serie, lim_inf, lim_sup, label='', title='', name='Outlie
     labels = [mes[Serie.index[int(i)][1]-1]+'\n'+str(Serie.index[int(i)][0]) for i in ticks[1:-1]]
     labels.insert(0,'')
     labels.append('')
-    # ax.set_xticklabels(labels,fontsize=16)
+    ax.set_xticklabels(labels,fontsize=14)
     # start, end = ax.get_xlim()
     # ax.xaxis.set_ticks(np.linspace(start, end, 8))
     # ax.xaxis.set_major_formatter(mdates.DateFormatter('%b\n%Y'))

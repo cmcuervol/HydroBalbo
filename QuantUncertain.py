@@ -14,7 +14,7 @@ import pylab as plt
 from Modules import Read
 from Modules.Utils import Listador, FindOutlier
 from Modules.FitStats import QuantilBestFit
-from ENSO import ONIdata
+from Modules.ENSO import ONIdata, OuliersENSOjust
 
 from tqdm import tqdm
 
@@ -22,30 +22,6 @@ ONI = ONIdata()
 ONI = ONI['Anomalie'].astype(float)
 ENSO = ONI[np.where((ONI.values<=-0.5)|(ONI.values>=0.5))[0]]
 
-
-def OuliersENSOjust(Serie, ENSO=ENSO, lim_inf=0):
-    """
-    Remove  ouliers with the function find ouliers and justify the values in ENSO periods
-    INPUTS
-    Serie : Pandas DataFrame or pandas Series with index as datetime
-    ENSO  : Pandas DataFrame with the index of dates of ENSO periods
-    lim_inf : limit at the bottom for the ouliers
-    OUTPUTS
-    S : DataFrame without ouliers outside ENSO periods
-    """
-
-    idx = FindOutlier(Serie, clean=False, index=True, lims=False, restrict_inf=lim_inf)
-    injust = []
-    for ii in idx:
-        month = dt.datetime(Serie.index[ii].year,Serie.index[ii].month, 1)
-        if month not in ENSO.index:
-            injust.append(ii)
-
-    if  len(injust) == 0:
-        S = Serie
-    else:
-        S = Serie.drop(Serie.index[injust])
-    return S
 ################################   INPUT   #####################################
 
 # Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
