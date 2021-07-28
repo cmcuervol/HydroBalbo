@@ -26,10 +26,13 @@ ONI = ONI['Anomalie'].astype(float)
 ENSO = ONI[np.where((ONI.values<=-0.5)|(ONI.values>=0.5))[0]]
 
 ################################   INPUT   #####################################
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Tests/Homogeneidad'))
+
+if os.path.exists(Path_out) == False:
+    os.makedirs(Path_out)
 
 Estaciones = Listador(Est_path,final='.csv')
 
@@ -59,6 +62,16 @@ for i in range(len(Estaciones)):
             label = 'Caudal '+ unidades if Meta.iloc[-4].values[0]=='CAUDAL' else 'Nivel '+unidades
 
         data = Read.EstacionCSV_pd(Estaciones[i], Est, path=Est_path)
+
+        # Mensual agregate
+        if Est_path.endswith('PPT'):
+            mensual = data.groupby(lambda m: (m.year,m.month)).sum()
+        elif Est_path.endswith('QDL'):
+            mensual = data.groupby(lambda m: (m.year,m.month)).mean()
+
+        mensual.index = [dt.datetime(i[0],i[1],1) for i in mensual.index]
+        data = mensual
+
         if Est_path.endswith('CleanNiveles'):
             data.index = [dt.datetime.strptime(fecha.strftime("%Y-%m-%d") , "%Y-%d-%m") for fecha in data.index]
     else:
