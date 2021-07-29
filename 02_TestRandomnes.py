@@ -192,8 +192,8 @@ def MannKendall_modified(Serie, rezagos=None, significance=5E-2):
     return test
 
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 
 
 Estaciones = Listador(Est_path,final='.csv')

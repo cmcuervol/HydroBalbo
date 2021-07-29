@@ -11,7 +11,7 @@ import pylab as plt
 import datetime as dt
 
 from Modules import Read
-from Modules.Utils import Listador
+from Modules.Utils import Listador, datetimer
 # Pruebas tendencia
 from Modules.Homogeneidad import mk_test, T_trend
 # Pruebas cambio varianza
@@ -62,6 +62,14 @@ for i in range(len(Estaciones)):
             label = 'Caudal '+ unidades if Meta.iloc[-4].values[0]=='CAUDAL' else 'Nivel '+unidades
 
         data = Read.EstacionCSV_pd(Estaciones[i], Est, path=Est_path)
+        # put NaN where are no data days
+        fech = datetimer(data.index[0],data.index[-1],24)
+        df = pd.DataFrame(np.zeros(len(fech))*np.nan, index=fech, columns=['fechas'])
+        res = pd.concat([data,df],axis=1)
+        del res['fechas']
+        # change nan to mean
+        res.iloc[np.where(np.isnan(res))[0]] = np.nanmean(res)
+        data = res
 
         # Mensual agregate
         if Est_path.endswith('PPT'):

@@ -12,8 +12,8 @@ from Modules.ENSO import SOIdata, MEIdata, ONIdata, SSTregions
 
 
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'ENSO'))
 
 
