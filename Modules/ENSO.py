@@ -89,7 +89,8 @@ def SOIdata():
     ONI : DataFrame with the ONI data
     """
     # linkSOI = 'http://www.bom.gov.au/climate/enso/soi.txt'
-    linkSOI = 'https://www.ncdc.noaa.gov/teleconnections/enso/indicators/soi/data.csv'
+    # linkSOI = 'https://www.ncdc.noaa.gov/teleconnections/enso/indicators/soi/data.csv'
+    linkSOI = 'https://www.cpc.ncep.noaa.gov/data/indices/soi'
     s = requests.get(linkSOI).content
 
     date = []
@@ -97,14 +98,41 @@ def SOIdata():
 
     with io.StringIO(s.decode('utf-8')) as f:
         data = f.readlines()
-    m = 0
+
+    # Old version with  csv data
+    # m = 0
+    # for i in range(len(data)):
+    #     if i >=2:
+    #         row = data[i].strip()
+    #         val = row.split(',')
+    #         date.append(dt.datetime.strptime(val[0], '%Y%m'))
+    #         soi.append(float(val[1]))
+    # SOI = pd.DataFrame(np.array(soi).T, index=date, columns=[u'SOI'])
+    
+    standarrized_flag = False
     for i in range(len(data)):
-        if i >=2:
-            row = data[i].strip()
-            val = row.split(',')
-            date.append(dt.datetime.strptime(val[0], '%Y%m'))
-            soi.append(float(val[1]))
+        if 'STANDARDIZED' in data[i]:
+            standarrized_flag  = True
+
+        if standarrized_flag == False:
+            continue
+        row = data[i].strip()
+        if len(row) != 76:
+            continue
+        if row.startswith('Y') == True:
+            continue
+
+        year = int(row[:4])
+        for m in range(12):
+            a = float(row[6*(m)+4:6*(m+1)+4])
+
+            date.append(dt.datetime(year, m+1,1))
+            if a == -999.9:
+                a = np.nan
+            soi.append(a)
+
     SOI = pd.DataFrame(np.array(soi).T, index=date, columns=[u'SOI'])
+    SOI = SOI.dropna()
 
     return SOI
 
