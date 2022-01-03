@@ -34,8 +34,8 @@ Lq    = [NORMq, EXPq, GUMq, GPAq, GEVq, GLOq, LLOG3q, LP3q]
 
 ################################   INPUT   #####################################
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 
 # Read.SplitAllIDEAM('NivelReal', Est_path=Est_path,Nivel=True)

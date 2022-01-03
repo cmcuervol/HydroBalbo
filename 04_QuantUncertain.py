@@ -24,8 +24,8 @@ ENSO = ONI[np.where((ONI.values<=-0.5)|(ONI.values>=0.5))[0]]
 
 ################################   INPUT   #####################################
 
-Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
-# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
+# Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/PPT'))
+Est_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'CleanData/QDL'))
 Path_out = os.path.abspath(os.path.join(os.path.dirname(__file__), 'Ajustes'))
 
 
